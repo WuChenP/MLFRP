@@ -41,7 +41,7 @@ def get_sample_size_range(X_train):
 if __name__ == "__main__":
     # Configuration parameters
     random_state = 42
-    data_path = '../../data/All data is used for ML.xlsx'
+    data_path = '../../data/Data for Machine Learning.xlsx'
     split_data_save_dir = './split_data'  # Directory for saving train/test sets
     model_save_dir = './model'
     correct_columns = ['C_i/C_m((g/L)/M)', 'C_ci/C_m((g/L)/M)', 'C_t/C_m((g/L)/M)', 'C_m (M)', 'T (°C)',

@@ -160,7 +160,7 @@ def evaluate_and_save_all(df, all_predictions, output_path):
 def main():
     # Configuration parameters
     config = {
-        'pred_data_path': '../../data/All data is used for ML.xlsx',  # Path to prediction data
+        'pred_data_path': '../../data/Data for Machine Learning.xlsx',  # Path to prediction data
         'model_dir': './model',  # Model storage directory
         'stats_path': './model/training_stats.pkl',
         'feature_info_path': './model/feature_info.pkl',
