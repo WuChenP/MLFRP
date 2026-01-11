@@ -111,6 +111,7 @@ def evaluate_and_save_all(df, all_predictions, output_path):
             mask = y_true.notna()
             r2 = r2_score(y_true[mask], y_hat[mask])
             mae = mean_absolute_error(y_true[mask], y_hat[mask])
+            mse = mean_squared_error(y_true[mask], y_hat[mask])
             rmse = np.sqrt(mean_squared_error(y_true[mask], y_hat[mask]))
 
             metrics_summary.append({
@@ -118,6 +119,7 @@ def evaluate_and_save_all(df, all_predictions, output_path):
                 'Target': target,
                 'R2': round(r2, 4),
                 'MAE': round(mae, 3),
+                'MSE': round(mse, 3),
                 'RMSE': round(rmse, 3)
             })
 
