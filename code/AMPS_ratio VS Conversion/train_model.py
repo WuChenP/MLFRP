@@ -43,7 +43,7 @@ def get_sample_size_range(X_train):
 # -------------------------- 2. Main Training Process --------------------------
 if __name__ == "__main__":
 
-    random_state = 55
+    random_state = 42
     data_path = '../../data/Data for Machine Learning.xlsx'
     split_data_save_dir = './split_data'
     model_save_dir = './model'
@@ -75,14 +75,14 @@ if __name__ == "__main__":
 
     # -------------------------- Step 2: Split data --------------------------
     train_data, test_data = processing.split_data(
-        data, train_size=0.8, random_state=random_state
+        data, train_size=0.8, random_state=55
     )
 
     train_data.to_csv(
-        f"{split_data_save_dir}/train_data_randomstate_{random_state}.csv"
+        f"{split_data_save_dir}/train_data.csv"
     )
     test_data.to_csv(
-        f"{split_data_save_dir}/test_data_randomstate_{random_state}.csv"
+        f"{split_data_save_dir}/test_data.csv"
     )
 
     # -------------------------- Step 3: Target  --------------------------
@@ -121,7 +121,7 @@ if __name__ == "__main__":
     # -------------------------- Step 7: Models (Multi-output) --------------------------
     models = {
         'Random Forest': MultiOutputRegressor(
-            RandomForestRegressor(n_estimators=50, random_state=random_state)
+            RandomForestRegressor(n_estimators=100, random_state=random_state)
         ),
 
         'Decision Tree': MultiOutputRegressor(
@@ -140,10 +140,8 @@ if __name__ == "__main__":
             GridSearchCV(
                 SVR(),
                 param_grid={
-                    'C': [0.1, 1, 10, 50],
+                    'C': [1, 10, 100],
                     'gamma': ['scale', 'auto'],
-                    'epsilon': [0.01, 0.1],
-                    'kernel': ['rbf']
                 },
                 cv=5,
                 scoring='r2',
@@ -157,7 +155,7 @@ if __name__ == "__main__":
     }
 
     model_performance = {}
-    kf = KFold(n_splits=5, shuffle=True, random_state=random_state)
+    kf = KFold(n_splits=5, shuffle=True, random_state=55)
 
     # -------------------------- Step 8: Training & Evaluation --------------------------
     for model_name, model in models.items():
