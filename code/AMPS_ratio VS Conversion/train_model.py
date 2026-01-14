@@ -120,8 +120,8 @@ if __name__ == "__main__":
 
     # -------------------------- Step 7: Models (Multi-output) --------------------------
     models = {
-        'Random Forest': MultiOutputRegressor(
-            RandomForestRegressor(n_estimators=100, random_state=random_state)
+        'Random Forest': RandomForestRegressor(
+            n_estimators=100, random_state=random_state
         ),
 
         'Decision Tree': MultiOutputRegressor(
@@ -140,7 +140,7 @@ if __name__ == "__main__":
             GridSearchCV(
                 SVR(),
                 param_grid={
-                    'C': [1, 10, 100],
+                    'C': [1, 10],
                     'gamma': ['scale', 'auto'],
                 },
                 cv=5,
@@ -210,6 +210,22 @@ if __name__ == "__main__":
             'test_r2': dict(zip(target_cols, test_r2)),
             'test_mse': dict(zip(target_cols, test_mse))
         }
+
+    # -------------------------- Print test-set metrics for all models --------------------------
+    summary_rows = []
+    for model_name, info in model_performance.items():
+        row = {"Model": model_name}
+        for col in target_cols:
+            row[f"R2_{col}"] = info["test_r2"][col]
+            row[f"MSE_{col}"] = info["test_mse"][col]
+        summary_rows.append(row)
+
+    summary_df = pd.DataFrame(summary_rows)
+
+    print("\n" + "=" * 80)
+    print(" All Models Test Set Metrics")
+    print("=" * 80)
+    print(summary_df.to_string(index=False, float_format=lambda x: f"{x:.4f}"))
 
     # -------------------------- Step 9: Save models --------------------------
     for i, (model_name, info) in enumerate(model_performance.items(), 1):
